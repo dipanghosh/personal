@@ -3,9 +3,9 @@ import sys
 reload(sys)
 from PIL import Image
 from PIL.ExifTags import TAGS
-from pprint import pprint
 import iptcinfo,os
 
+descriptionFlag = False
 def get_exif(fn):
     ret = {}
     i = Image.open(fn)
@@ -15,12 +15,15 @@ def get_exif(fn):
         decoded = TAGS.get(tag, tag)
         ret[decoded] = value
     ret["keywords"] = iptc.keywords
+    if not descriptionFlag:
+        ret['ImageDescription'] = ''
     return ret
 
 
 #f = open("C:\Users\Dipan\Desktop\_MG_5223.jpg", 'rb')
-dirName = "C:\Users\Dipan\Creative Cloud Files\portfolio_site\christmastrip2017\\praha\\"
-outputFile = open(dirName+'outputHTML.html', 'w')
+#dirName = "D:\Creative Cloud Files\portfolio_site\galleries\\zugspitze\\"
+#dirName = "D:\\Creative Cloud Files\\portfolio_site\\travels\\christmastrip2017\\vienna\\"
+#outputFile = open(dirName+'outputHTML.html', 'w')
 
 
 
@@ -28,15 +31,16 @@ outputFile = open(dirName+'outputHTML.html', 'w')
 
 #pprint(exifdata)
 
-def getOutputHTML(f):
+def getOutputHTML(f, dirName, gallery_title):
     filename = os.path.basename(f.name)
     basename = filename.split('-')[:-1]
     basename = '-'.join(basename)
     exifdata = get_exif(f)
+    print exifdata['ImageDescription']
     outputHTML =  '<a href="./'+\
           dirName.split("\\")[-2]+\
           '/'+basename+\
-          '-web.jpg" data-toggle="lightbox" data-gallery="christmasmarket" data-footer= "'+\
+          '-web.jpg" data-toggle="lightbox" data-gallery="' +gallery_title+ ' " data-footer= "'+\
           exifdata["ImageDescription"]+\
           '" ><figure class="photothumbnail"><img src="./'+\
           dirName.split("\\")[-2]+\
@@ -46,11 +50,15 @@ def getOutputHTML(f):
     outputHTML = outputHTML.encode('latin-1').replace("ä","ae").replace("Ä","Äe").replace("ö","oe").replace("Ö","oe")
     return outputHTML
 
-for filename in os.listdir(dirName):
-    f = open(dirName + filename, 'rb')
-    try:
-        outputFile.write(getOutputHTML(f))
-        outputFile.write('\n')
-    except:
-        pass
+def imageGridCode(dirName, gallerytitle):
+    html = []
+    for filename in os.listdir(dirName):
+        if filename.endswith('.jpg'):
+            f = open(dirName + filename, 'rb')
+        try:
+            html.append(getOutputHTML(f, dirName, gallerytitle))
+        except:
+            pass
+
+    return '\n'.join(html)
 
