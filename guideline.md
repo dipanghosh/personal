@@ -15,7 +15,7 @@ There are a few ways of going about hunting a PhD in Germany, or in the EU in ge
 1. Look for a fellowship and apply for the fellowship
 2. Look for a lab, apply to the professor
 
-Both approches are viable, and it is probably best to try a two-pronged attack. When it comes to applications in EU, it generally does not cost any money to apply (unlike in US universities), so putting the time in to make a few well thought out application is a good approach in my opinion. 
+Both approches are viable, and it is probably best to try a two-pronged attack. When it comes to applications in EU, it generally does not cost any money to apply (unlike in US universities), so putting the time in to make few well thought out applications is a good approach in my opinion. 
 
 ## Fellowships
 The plus point of a fellowship is that you are self funded. Therefore, your research does not depend on what funding the professor may have. For good fellowships, you also get a lot of freedom regarding your work, going to conferences, and career development in general. I will mention a few of the best fellowships I know of that you can target. There are many others. Do some research online to find out other such fellowships.
