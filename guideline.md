@@ -31,7 +31,7 @@ There are a few job boards where such positions are posted. Few well known ones 
 As an example, I searched for *Early Stage Researcher* in the EURES portal, and [here](https://ec.europa.eu/eures/eures-searchengine/page/main?lang=en&app=0.16.1p3-build-0#/search?keyword=Early%20Stage%20Researcher) are the results that comes up. All of these are Marie Curie PhD fellowships that are open right now. Early stage researcher is the actual name of the position for Marie Curie, so searching by that gets you open Marie Curie positions. Searching for more generic queries such as *PhD in Chemistry* will yield more generic results.
 In any case, once they release the adverts, make your best effort to stand out from the crowd. There are a lot of applications that the receiver has to go through, so it is important to make a good first improssion. Publications in peer-reviewed journal will help in this quite a bit. If you have gone abroad for interships, that will also help. Try getting some of that in the first year of MSc. Also, you will need recommendations from your professors. Good recommendations goes a long way. You can also try to approch the professor directly. I discuss that in the next section.
 
-### 2. Max PLank Society
+### 2. Max Plank Society
 If you are looking into Germany specifically, there are many fellowship offered by the Max Plank Society. Google "max planck fellowship phd", and you will find a lot of information. Max Planks are **the** most reputed research instt. in Germany, so the fellowships and training they offer are also very good.
 
 ### 3. DAAD and Erasmus
