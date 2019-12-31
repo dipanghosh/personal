@@ -1,53 +1,52 @@
-# -*- coding: utf-8 -*-
 import sys
-reload(sys)
 from PIL import Image
-from PIL.ExifTags import TAGS
-import iptcinfo,os
+from PIL import IptcImagePlugin
+import os
 
 descriptionFlag = False
-def get_exif(fn):
-    ret = {}
-    i = Image.open(fn)
-    info = i._getexif()
-    iptc = iptcinfo.IPTCInfo(fn)
-    for tag, value in info.items():
-        decoded = TAGS.get(tag, tag)
-        ret[decoded] = value
-    ret["keywords"] = iptc.keywords
-    if not descriptionFlag:
-        ret['ImageDescription'] = ''
-    return ret
 
 
-#f = open("C:\Users\Dipan\Desktop\_MG_5223.jpg", 'rb')
-#dirName = "D:\Creative Cloud Files\portfolio_site\galleries\\zugspitze\\"
-#dirName = "D:\\Creative Cloud Files\\portfolio_site\\travels\\christmastrip2017\\vienna\\"
-#outputFile = open(dirName+'outputHTML.html', 'w')
+def get_title_description(image):
+    im = Image.open(image)
+    iptc = IptcImagePlugin.getiptcinfo(im)
+    infodict = {}
+    try:
+        infodict["title"] = iptc.get((2,5)).decode()
+    except (AttributeError):
+        infodict["title"] = ""
+    try:
+        infodict["description"] = iptc.get((2,120)).decode()
+    except (AttributeError):
+        infodict["description"] = ""
+    try:
+        infodict["photographer"] = iptc.get((2,80)).decode()
+    except (AttributeError):
+        infodict["photographer"] = "Dipan"
+    try:
+        keywordlist = iptc.get((2,25))
+        templist = []
+        if keywordlist:
+            for keyword in keywordlist:
+                templist.append(keyword.decode())
+            infodict["keywords"] = ", ".join(templist)
+        else:
+            infodict["keywords"] = ""
+    except (AttributeError):
+        infodict["keywords"] = ""
+    return infodict
 
-
-
-#print basename
-
-#pprint(exifdata)
-
-def getOutputHTML(f, dirName, gallery_title):
+def getOutputHTML(f, dirname, gallery_title):
+    local_dirname = dirname.split("\\")[-2]
     filename = os.path.basename(f.name)
     basename = filename.split('-')[:-1]
-    basename = '-'.join(basename)
-    exifdata = get_exif(f)
-    print exifdata['ImageDescription']
-    outputHTML =  '<a href="./'+\
-          dirName.split("\\")[-2]+\
-          '/'+basename+\
-          '-web.jpg" data-toggle="lightbox" data-gallery="' +gallery_title+ ' " data-footer= "'+\
-          exifdata["ImageDescription"]+\
-          '" ><figure class="photothumbnail"><img src="./'+\
-          dirName.split("\\")[-2]+\
-          '/thumb/'+basename+'-web-thumb.jpg" alt="'+\
-          ','.join(exifdata['keywords'])+\
-          '" class="center-block"></figure></a>'
-    outputHTML = outputHTML.encode('latin-1').replace("ä","ae").replace("Ä","Äe").replace("ö","oe").replace("Ö","oe")
+    original_filename = '-'.join(basename)
+    exifdata = get_title_description(f.name)
+    print(exifdata)
+    href = "./{}/{}-web.jpg".format(local_dirname, original_filename)
+    src = "./{}/thumb/{}-thumb.jpg".format(local_dirname, original_filename)
+
+    outputHTML =  '<a href="{}" data-toggle="lightbox" data-gallery="{}" data-footer= "{}" ><figure class="photothumbnail"><img src="{}" alt="{}" class="center-block"></figure></a>'.format(href, gallery_title, exifdata["description"], src, exifdata["keywords"])
+
     return outputHTML
 
 def imageGridCode(dirName, gallerytitle):
@@ -55,10 +54,7 @@ def imageGridCode(dirName, gallerytitle):
     for filename in os.listdir(dirName):
         if filename.endswith('.jpg'):
             f = open(dirName + filename, 'rb')
-        try:
             html.append(getOutputHTML(f, dirName, gallerytitle))
-        except:
-            pass
+
 
     return '\n'.join(html)
-

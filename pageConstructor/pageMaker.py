@@ -1,17 +1,17 @@
-import pageConstructor.pageconstructorClass as page
+import pageconstructorClass as page
 import os,platform
 
-title = "Cherry Blossom: 2018"
-desc = """  Cherry blossoms marks the coming of Spring, and it is very beautiful indeed. With improved gear and experience, I headed out to shoot these magnificent flowers this year. From wide angle to Macro, nothing was left out."""
-folderName = "cherryblossom-2018"
+title = "Switzerland"
+desc = """Photos from our trip to Switzerland in 2018"""
+folderName = "switzerland"
 
 myPage = page.galleryPage()
-myPage.setinfo(title=title,desc=desc, keyw="Cherry Blossoms, Flower, Photography, Macro")
+myPage.setinfo(title=title,desc=desc, keyw="Aurora Borealis, Aurora, Sweden, Abisko, North Pole")
 if "Windows" in platform.platform():
-    myPage.path = "D:\Creative Cloud Files\portfolio_site\galleries\\"+folderName+"\\"
+    myPage.path = "C:\\Users\\dipan\\Creative Cloud Files\\portfolio_site\\travels\\" + folderName + "\\"
 elif "Darwin" in platform.platform():
     myPage.path = "/Users/dghosh/Creative Cloud Files/portfolio_site/galleries/"+folderName+"/"
 
 
-outfile = open(os.path.dirname(myPage.path) +"-generated.html", 'w')
+outfile = open(os.path.dirname(myPage.path) +"-generated-test.html", 'w')
 outfile.write("\n".join(myPage.createPage()))
